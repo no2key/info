@@ -1,0 +1,89 @@
+<extend name="Public:base" />
+<block name="title"><title>index</title></block>
+<block name="container">
+    <div class="container row">
+        <div class="span12">
+            <h1>LOGO</h1>
+        </div>
+
+
+        <div class="row">
+            <div class="span3">
+                <div>
+                    <form class="form-search">
+                        <input type="text" class="input-small" name="title"> <button type="submit" class="btn">查找</button>
+                    </form>
+                </div>
+                <div>
+                    <dl class="sidebar-filter">
+                        <dt>
+                            筛选
+                        </dt>
+                        <?php foreach ($category as $id=>$vo):?>
+                            <dd>
+                                <strong></b><a rel="" href="<?php echo U('Index/index?category='.$id);?>">{$vo.name}</a></strong>
+                            </dd>
+                            <?php foreach ($vo['sub'] as $svo):?>
+                            <dd style="padding-left: 20px;">
+                                <a rel="" href="<?php echo U('Index/index?category='.$svo['id']);?>">{$svo.name}</a>
+                            </dd>
+                            <?php endforeach;?>
+                        <?php endforeach;?>
+
+                    </dl>
+                </div>
+            </div>
+            <div class="span9">
+                <ul class="inline new-info">
+                    <a rel="" href="{:U('Index/index?region=0')}">全部城市</a>
+                    <?php foreach($regions as $id=>$r): ?>
+                    <li><a rel="" href="<?php echo U('Index/index?region='. $id);?>">{$r}</a></li>
+                    <?php endforeach;?>
+
+            </ul>
+            <h5 class="new-info">
+                赞助商链接
+            </h5>
+            <div>
+                <ul class="inline">
+                    <li><img  title="全国高校毕业生夏季招聘月" src="http://u.img.huxiu.com/portal/201308/22/191123opp3f11kyx9yuuro.jpg.thumb.jpg"></li>
+                    <li><img  title="全国高校毕业生夏季招聘月" src="http://u.img.huxiu.com/portal/201308/22/184055gl5bgg45vk5b51m4.jpg.thumb.jpg"></li>
+                    <li><img  title="玛氏-箭牌2013创意策划大赛" src="http://u.img.huxiu.com/portal/201308/22/111747sw06wln0swi9eelq.jpg.thumb.jpg"></li>
+                    <li><img  src="http://u.img.huxiu.com/portal/201308/22/100158l9z9a7cj9d7rraey.jpg.thumb.jpg"></li>
+                    <li><img  title="EMC2013爱存储在线知识竞赛" src="http://u.img.huxiu.com/portal/201308/21/164258kxkv33gxkwn333w3.png.thumb.jpg"></li>
+                    <li><img  title="招商银行信用卡中心2013校园招聘及实习生招聘" src="http://u.img.huxiu.com/portal/201308/21/115505yvy0mzmvknygv0rk.jpg.thumb.jpg"></li>
+
+                </ul>
+
+            </div>
+            <h5 class="new-info">
+                最新信息
+            </h5>
+            <div>
+                <ul class="unstyled">
+                    <volist name="data" id="vo">
+                        <li class="info-li-style">
+                            <a href="__APP__/Detail/index/id/{$vo.id}" class="media-cap">
+                                    <img src="<?php echo $vo['photo'];?>"></a>
+                            <div>
+                                <div>
+                                    <a href="__APP__/Detail/index/id/{$vo.id}" class="media-body-title">{$vo.title}</a>
+                                    <span class="media-body-time">{$vo.date}</span>
+                                </div>
+                                <div class="media-body-address">{$vo.region} - {$vo.address}</div>
+                                <div class="media-body-category">{$vo.category} - {$vo.address}</div>
+                                <?php if ($vo['pay']):?>
+                                <div class="media-body-pay">{$vo.pay}元/天</div>
+                                <?php endif;?>
+                            </div>
+                        </li>
+                    </volist>
+                </ul>
+            </div>
+            <div class="pagination">
+                {$page}
+            </div>
+        </div>
+    </div>
+</div>
+</block>

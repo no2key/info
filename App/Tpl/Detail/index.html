@@ -1,0 +1,46 @@
+<extend name="Public:base" />
+<block name="title"><title>detail</title></block>
+<block name="container">
+    <div class="container row">
+        <div class="span12">
+            <h1>LOGO</h1>
+        </div>
+        <div>
+            <div class="viewad">
+                <h2 class="viewad-title">
+                    {$data['title']}
+                </h2>
+                <div class="viewad-meta">
+                    时间：{$data.date}
+                </div>
+                <div class="viewad-info">
+                    <a target="_blank" href="#">地区：{$data.region}</a>
+                    <span>&nbsp;-&nbsp;</span>
+                    <a target="_blank" href="#">{$data.address}</a>
+                </div>
+            </div>
+            <div class="viewad-descript">
+                <div class="typo-p textwrap">
+                    <span>日薪：{$data.pay}</span>
+                </div>
+                <div class="typo-p textwrap">
+                <span>公司：{$data.company}</span>
+                </div>
+                <div class="typo-p textwrap">
+                    详情：
+                    <pre>{$data.content}</pre>
+                    <?php foreach($data['photo'] as $pho):?>
+                    <img src="<?php echo $pho;?>"></a>
+                    <?php endforeach;?>
+                </div>
+            </div>
+            <div class="medi">
+                电话：{$data.phone}
+            </div>
+            <div class="medi">
+                联系人：{$data.contract}
+            </div>
+        </div>
+    </div>
+</div>
+</block>
