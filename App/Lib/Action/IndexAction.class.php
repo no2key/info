@@ -129,7 +129,8 @@ class IndexAction extends BaseAction {
 	public function userinfo() {
 		$User = M('User');
 		$usr = aes_decode(cookie('token'));
-		$data = $User->where("username='$usr'")->select()[0];
+		$data = $User->where("username='$usr'")->select();
+		$data = $data[0];
 		if (empty($data['username'])) {
 			$this->error('请先登录');
 		}
