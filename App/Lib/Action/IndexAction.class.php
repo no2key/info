@@ -29,7 +29,7 @@ class IndexAction extends BaseAction {
 			if (!isset($cates[$category])) {
 				$map['category'] = array('in', $category);
 			} else {
-				$q = ['in'];
+				$q = array('in');
 				foreach ($cates[$category]['sub'] as $sub) {
 					$q[] = $sub['id'];
 				}
