@@ -1,69 +1,34 @@
 <?php
 
 // 本类由系统自动生成，仅供测试用途
-class IndexAction extends Action {
-
-	public $ca;
-	public $regions;
-
-	public function initCategory() {
-		$cate = M('category');
-		$d = $cate->select();
-		$this->ca = [];
-		foreach($d as $v) {
-			if ($v['pid'] == '0') {
-				$this->ca[$v['id']]['name'] = $v['name'];
-			} else {
-				$this->ca[$v['pid']]['sub'][] = $v;
-			}
-
-		}
-		$this->assign('category', $this->ca);
-		$reg = M('region');
-		$regions = $reg->select();
-		foreach ($regions as $r) {
-			$this->regions[$r['id']] = $r['name'];
-		}
-		$this->assign('regions', $this->regions);
-	}
-
-	private function _getCateName($caId) {
-		foreach ($this->ca as $id=>$parent) {
-			if ($id == $caId) {
-				return $parent['name'];
-			}
-			foreach ($parent['sub'] as $sub) {
-				if ($sub['id'] == $caId) {
-					return $parent['name'].'-'.$sub['name'];
-				}
-			}
-		}
-	}
+class IndexAction extends BaseAction {
 
 	public function index() {
-		$this->initCategory();
 		$region = $this->_param('region');
 		if (isset($region)) {
 			if ($region == 0) {
 				$region = null;
 				cookie('region', null, array('expire'=>-1));
 			} else {
-				cookie('region', array('id'=>$region, 'name'=>$this->regions[$region]), array('expire'=>time()+3600*24));
+				cookie('region', array('id'=>$region, 'name'=>$this->regions->getRegion()[$region]), array('expire'=>time()+3600*24));
 			}
 		} else {
 			$region = cookie('region')['id'];
 		}
 		$category = $this->_param('category');
 		$title = $this->_param('title');
+		$map = array();
+		$map['status'] = 0;
 		if ($region) {
 			$map['region'] = $region;
 		}
 		if ($category) {
-			if (!isset($this->ca[$category])) {
+			$cates = $this->ca->getCategory();
+			if (!isset($cates[$category])) {
 				$map['category'] = array('in', $category);
 			} else {
 				$q = ['in'];
-				foreach ($this->ca[$category]['sub'] as $sub) {
+				foreach ($cates[$category]['sub'] as $sub) {
 					$q[] = $sub['id'];
 				}
 				$map['category'] = $q;
@@ -72,23 +37,15 @@ class IndexAction extends Action {
 		if ($title) {
 			$map['title'] = array('like', "%$title%");
 		}
-		$Data = M('Publish'); // 实例化Data数据对象
-		import('ORG.Util.Page'); // 导入分页类
-		$count = $Data->where($map)->count(); // 查询满足要求的总记录数 $map表示查询条件
-		$Page = new Page($count); // 实例化分页类 传入总记录数
-		$show = $Page->show(); // 分页显示输出
+		$Data = M('Publish');
+		import('ORG.Util.Page');
+		$count = $Data->where($map)->count();
+		$Page = new Page($count);
+		$show = $Page->show();
 		// 进行分页数据查询
 		$list = $Data->where($map)->order('date desc')->limit($Page->firstRow . ',' . $Page->listRows)->select();
-		foreach ($list as &$l) {
-			$l['category'] = $this->_getCateName($l['category']);
-			$l['region'] = $this->regions[$l['region']];
-			$photos = explode(',', $l['photo']);
-			if(empty($photos[0])){
-				$l['photo'] = '/img/photo_64.jpg';
-			} else {
-				$l['photo'] = '/Uploads/s_'.$photos[0];
-			}
-		}
+		$pub = D('Publish');
+		$pub->formatOutput($list, 's');
 
 		$this->assign('data', $list); // 赋值数据集
 		if (!IS_AJAX) {
@@ -97,20 +54,7 @@ class IndexAction extends Action {
 			$this->assign('total', $Page->totalPages);
 		}
 
-
-
-		if (cookie('token')) {
-			$User = M('User');
-			$usr = aes_decode(cookie('token'));
-			$jifen = $User->where("username='$usr'")->getField('jifen');
-			$permission = $User->where("username='$usr'")->getField('permission');
-			$this->assign('jifen', $jifen);
-			$this->assign('usr', $usr);
-			$this->assign('permission', $permission);
-		}
-
-
-		$this->display(); // 输出模板
+		$this->display();
 	}
 
 	public function login() {
@@ -123,8 +67,6 @@ class IndexAction extends Action {
 		} else {
 			$this->error('登录失败！');
 		}
-		//$this->redirect('Index/index');
-
 	}
 
 	public function logout() {
@@ -149,6 +91,9 @@ class IndexAction extends Action {
 	}
 
 	public function sign() {
+		if (!$this->login) {
+			$this->error("请先登录");
+		}
 		$User = M('User');
 		$usr = aes_decode(cookie('token'));
 		$sign = $User->where("username='$usr'")->getField('signtime');
@@ -161,7 +106,7 @@ class IndexAction extends Action {
 			return;
 		}
 		$User->where("username='$usr'")->setField('signtime', date('Y-m-d', time()));
-		$User->where("username='$usr'")->setInc('jifen', 10);
+		$User->where("username='$usr'")->setInc('jifen', C('JIFEN_SIGN_INC'));
 		if (IS_AJAX) {
 			$this->success("签到成功");
 		} else {
@@ -170,12 +115,12 @@ class IndexAction extends Action {
 	}
 
 	public function category() {
-		$this->initCategory();
+		$this->ca->getCategory();
 		$this->success('', '',false, $this->ca);
 	}
 
 	public function regions() {
-		$this->initCategory();
+		$this->regions->getRegion();
 		$this->success('', '',false, $this->regions);
 	}
 

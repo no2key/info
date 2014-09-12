@@ -88,6 +88,7 @@ class DbMysql extends Db{
      * @return mixed
      */
     public function query($str) {
+//		echo $str.PHP_EOL;
         if(0===stripos($str, 'call')){ // 存储过程查询支持
             $this->close();
             $this->connected    =   false;

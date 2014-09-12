@@ -1,58 +1,16 @@
 <?php 
-class DetailAction extends Action{
-
-	public $ca;
-	public $regions;
-
-	public function _initialize() {
-		$cate = M('category');
-		$d = $cate->select();
-		$this->ca = [];
-		foreach($d as $v) {
-			if ($v['pid'] == '0') {
-				$this->ca[$v['id']]['name'] = $v['name'];
-			} else {
-				$this->ca[$v['pid']]['sub'][] = $v;
-			}
-		}
-		$this->assign('category', $this->ca);
-		$reg = M('region');
-		$regions = $reg->select();
-		foreach ($regions as $r) {
-			$this->regions[$r['id']] = $r['name'];
-		}
-		$this->assign('regions', $this->regions);
-	}
-
-	private function _getCateName($caId) {
-		foreach ($this->ca as $id=>$parent) {
-			if ($id == $caId) {
-				return $parent['name'];
-			}
-			foreach ($parent['sub'] as $sub) {
-				if ($sub['id'] == $caId) {
-					return $parent['name'].'-'.$sub['name'];
-				}
-			}
-		}
-	}
+class DetailAction extends BaseAction{
 
 	public function index(){
-		$Data = M('Publish');
-		$list=$Data->where("id={$_GET['id']}")->find();
-		$list['category'] = $this->_getCateName($list['category']);
-		$list['region'] = $this->regions[$list['region']];
-		$tmp = explode(',', $list['photo']);
-		if (!empty($tmp[0])) {
-			$phos = array();
-			foreach ($tmp as $t) {
-				$phos[] = '/Uploads/m_'.$t;
-			}
-			$list['photo'] = $phos;
-		}
-		$this->assign('data', $list);
+		$Data = D('Publish');
+		$list = $Data->where(array(
+			'id'=>$this->_param('id')
+		))->select();
+		$Data->formatOutput($list);
+		$Data->addView($list[0]['id']);
 
-		//dump($res);
+		$this->assign('data', $list[0]);
+
 		$this->display();
 		
 	}

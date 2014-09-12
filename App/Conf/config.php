@@ -11,5 +11,15 @@ return array(
 	'DB_PORT' => '3306',
 	'DB_PREFIX' => 'info_',
 	'DB_CHARSET' => 'utf8',
+	'BASE_URI'	=> '/',
+	//积分相关规则
+	'JIFEN_POST_DEC' => 10,
+	'JIFEN_POST_PIC_DEC' => 10,
+	'JIFEN_REFRESH_DEC' => 5,
+	'JIFEN_SIGN_INC' => 10,
+	'JIFEN_COMMENT_INC' => 1,
+
+	//国际化相关KEY
+
 );
 ?>

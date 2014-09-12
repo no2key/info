@@ -10,12 +10,13 @@ class PublishModel extends Model {
 		$User=M('User');
 		$usr=aes_decode(cookie('token'));
 		$jifen = $User->where("username='$usr'")->getField('jifen');
-		if ($jifen < 10) {
-			$this->error = '积分不足,至少需要10分';
+		if ($jifen < C('JIFEN_POST_DEC')) {
+			$this->error = '积分不足,至少需要'.C('JIFEN_POST_DEC').'分';
 			return false;
 		}
-		if (isset($data['photo']) && $jifen < 20) {
-			$this->error = '积分不足,发送有图信息至少需要20分';
+		if (isset($data['photo']) &&
+			$jifen < (C('JIFEN_POST_PIC_DEC') + C('JIFEN_POST_DEC'))) {
+			$this->error = '积分不足,发送有图信息至少需要'.(C('JIFEN_POST_PIC_DEC') + C('JIFEN_POST_DEC')).'分';
 			return false;
 		}
 		return true;
@@ -29,7 +30,47 @@ class PublishModel extends Model {
 		$User=M('User');
 		$usr=aes_decode(cookie('token'));
 		$User->where("username='$usr'")->setDec('jifen', $dec);
+
+		$m = M('kv');
+		$m->add(array(
+			'key'=>"publish:".$data['id'],
+			'value'=>0
+		));
 	}
+
+	public function formatOutput(&$list, $picSize='m') {
+		$ca = D('category');
+		$re = D('region');
+		foreach ($list as &$l) {
+			$l['category'] = $ca->getCateName($l['category']);
+			$l['region'] = $re->regions[$l['region']];
+			$photos = explode(',', $l['photo']);
+			if(empty($photos[0])){
+				$l['photo'] = array();
+				$l['thumb'] = C('BASE_URI').'img/photo_64.jpg';
+			} else {
+				$l['photo'] = array();
+				foreach ($photos as $p) {
+					$l['photo'][] = C('BASE_URI')."Uploads/{$picSize}_{$p}";
+				}
+				$l['thumb'] = $l['photo'][0];
+			}
+			$m = M('kv');
+			$l['view'] = intval($m->where(array('key'=>"publish:".$l['id']))->getField('value'));
+		}
+	}
+
+	public function addView($id) {
+		$m = M('kv');
+		if (!$m->where(array('key'=>"publish:$id"))->find()) {
+			$m->add(array(
+				'key'=>"publish:".$id,
+				'value'=>0
+			));
+		}
+		$m->where(array('key'=>"publish:$id"))->setInc('value', 1);
+	}
+
 }
 
 

@@ -7,10 +7,16 @@ class UserModel extends Model {
         array('repassword','password','确认密码不正确',0,'confirm'),
         array('password','require','密码必须'),
 	);
-    // 定义自动完成
-    /*protected $_auto    =   array(
-        array('create_time','time',1,'function'),
-        );*/
+
+	public function getLoginInfo() {
+		$vo = false;
+		$User = M('User');
+		$usr = aes_decode(cookie('token'));
+		if ($User->where("username='$usr'")->count()) {
+			$vo = $User->where("username='$usr'")->select()[0];
+		}
+		return $vo;
+	}
 }
 
 

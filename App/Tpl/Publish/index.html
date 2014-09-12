@@ -1,10 +1,11 @@
 <extend name="Public:base" />
 <block name="title"><title>publish</title></block>
 <block name="container">
-    <div class="container row">
+    <div class="container">
         <div class="span12">
             <h1>LOGO</h1>
         </div>
+
         <div>
             <form class="form-horizontal" method="post" action="{:U('Publish/add')}" enctype="multipart/form-data">
                 <div class="control-group">
@@ -28,17 +29,22 @@
                         </select>
                     </div>
                 </div>
-                <div class="control-group">
+                <div class="control-group hide">
                     <label class="control-label" for="inputPay">工资：</label>
                     <div class="controls">
                         <input type="text" id="inputPay" placeholder="" name="pay"><span> 元/天</span>
                     </div>
                 </div>
+                <div class="control-group hide">
+                    <label class="control-label" for="inputCompany">公司名称：</label>
+                    <div class="controls">
+                        <input type="text" id="inputCompany" placeholder="" name="company">
+                    </div>
+                </div>
                 <div class="control-group">
                     <label class="control-label" for="inputContent">描述：</label>
                     <div class="controls">
-                        <textarea id="inputContent" name="content" rows="9" class="input-block-level input-xxlarge">
-                        </textarea>
+                        <textarea id="inputContent" name="content" rows="9" class="input-block-level input-xxlarge"></textarea>
                     </div>
                 </div>
                 <div class="control-group">
@@ -54,25 +60,21 @@
                     </div>
                 </div>
                 <div class="control-group">
-                    <label class="control-label" for="inputCompany">公司名称：</label>
-                    <div class="controls">
-                        <input type="text" id="inputCompany" placeholder="" name="company">
-                    </div>
-                </div>
-                <div class="control-group">
                     <label class="control-label" for="inputAddress">工作地点：</label>
                     <div class="controls">
                         <select id="inputAddress" placeholder="" name="region" class="input-medium">
                             <option selected disabled="disabled">----选择城市----</option>
-                            <?php foreach($regions as $r): ?>
-                            <option value="{$r.id}">{$r.name}</option>
+                            <?php foreach($regions as $id=>$r): ?>
+                            <option value="{$id}">{$r}</option>
                             <?php endforeach;?>
                         </select>
                     </div>
                 </div>
                 <div class="control-group">
+                    <label class="control-label" for="inputDetailAddress">详细地址：</label>
                     <div class="controls">
                         <input type="text" id="inputDetailAddress" placeholder="" name="address">
+                        <a id="mapModal_btn" role="button" class="btn" data-toggle="modal">在地图上标注</a>
                     </div>
                 </div>
                 <div class="control-group">
@@ -92,8 +94,119 @@
                         <button type="submit" class="btn btn-primary">免费注册并发布</button> <button type="button" class="btn">取消</button>
                     </div>
                 </div>
+
+
+                <div id="mapModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="mapModalLabel" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="myModalLabel">标注位置</h3>
+                    </div>
+                    <div class="modal-body" style="height: 300px;">
+                        <div id="map-canvas" style="width: 100%;height: 100%;overflow: hidden;margin:0;"></div>
+
+                        <input type="hidden" name="lng">
+                        <input type="hidden" name="lat">
+                        <br>
+                    </div>
+                    <div class="modal-footer">
+                        <label style="display: inline">当前标注位置：</label>
+                        <input type="text" id="marker_address">
+                        <ul id="searchResultPanel" style="display:none;"></ul>
+                        <a id="mark" class="btn btn-primary">确定</a>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
 </div>
+</block>
+
+<block name="userjs">
+<!--<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>-->
+<script>
+function init() {
+    var map = new BMap.Map("map-canvas");
+    var point = new BMap.Point(116.400244,39.92556);
+    var gc = new BMap.Geocoder();
+    map.centerAndZoom("北京", 12);
+    var mkr = new BMap.Marker(point, {
+        enableDragging:true
+    });
+    map.addOverlay(mkr);
+    map.enableScrollWheelZoom();
+    map.disableDoubleClickZoom();
+    map.addControl(new BMap.NavigationControl());
+    map.addControl(new BMap.ScaleControl());
+    map.addControl(new BMap.OverviewMapControl());
+    mkr.addEventListener("dragend", function(e){
+        var pt = e.point;
+        mkr.setPosition(pt);
+        gc.getLocation(pt, function(rs){
+            $("#marker_address").attr('value',
+                    rs.addressComponents.street+", "+
+                            rs.addressComponents.district+", "+
+                            rs.addressComponents.city
+            );
+        });
+        $("input[name=lng]").attr('value', pt.lng);
+        $("input[name=lat]").attr('value', pt.lat);
+    });
+}
+$(function(){
+    $("#mapModal_btn").click(function(){
+        $('#mapModal').modal('toggle');
+        if (!window.loadMap) {
+            var mapScript= document.createElement("script");
+            mapScript.type = "text/javascript";
+            mapScript.src="http://api.map.baidu.com/api?v=2.0&callback=init&ak=Z0QeCyOfVo4mb8q9HT1Fxu2f";
+            document.body.appendChild(mapScript);
+            window.loadMap = true;
+        }
+
+        $("#mark").click(function(e){
+            $("input[name=address]").attr('value', $("#marker_address").val());
+            $('#mapModal').modal('toggle');
+        })
+    });
+    $("#inputCategory").change(function(){
+        if ($("#inputCategory").val() == 12) {
+            $("input[name=pay]").parent().parent().fadeIn();
+            $("input[name=company]").parent().parent().fadeIn();
+        } else {
+            $("input[name=pay]").parent().parent().fadeOut();
+            $("input[name=company]").parent().parent().fadeOut();
+        }
+    });
+})
+
+
+//function initialize() {
+//    var myLatlng = new google.maps.LatLng(39.904214, 116.407413);
+//    var mapOptions = {
+//        zoom: 11,
+//        mapTypeId: google.maps.MapTypeId.ROADMAP,
+//        zoomControl: true,
+//        scaleControl: true,
+//        center: myLatlng
+//    }
+//    var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+//
+//    var marker = new google.maps.Marker({
+//        position: myLatlng,
+//        map: map,
+//        title: 'Hello World!',
+//        draggable: true,
+//        geodesic: true
+//    });
+//    google.maps.event.addListener(marker, "dragend", function() {
+//        var latlng = marker.getPosition();
+//        lat = String(latlng.lat());
+//        lng = String(latlng.lng());
+//        alert(lat+","+lng);
+//    });
+//}
+//
+//google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+
 </block>
