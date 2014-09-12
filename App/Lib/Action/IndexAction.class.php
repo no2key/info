@@ -14,7 +14,8 @@ class IndexAction extends BaseAction {
 				cookie('region', array('id'=>$region, 'name'=>$tmp[$region]), array('expire'=>time()+3600*24));
 			}
 		} else {
-			$region = cookie('region')['id'];
+			$tmp = cookie('region');
+			$region = $tmp['id'];
 		}
 		$category = $this->_param('category');
 		$title = $this->_param('title');
