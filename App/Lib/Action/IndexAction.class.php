@@ -10,7 +10,8 @@ class IndexAction extends BaseAction {
 				$region = null;
 				cookie('region', null, array('expire'=>-1));
 			} else {
-				cookie('region', array('id'=>$region, 'name'=>$this->regions->getRegion()[$region]), array('expire'=>time()+3600*24));
+				$tmp = $this->regions->getRegion();
+				cookie('region', array('id'=>$region, 'name'=>$tmp[$region]), array('expire'=>time()+3600*24));
 			}
 		} else {
 			$region = cookie('region')['id'];
