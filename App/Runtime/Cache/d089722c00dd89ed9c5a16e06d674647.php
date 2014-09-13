@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- Bootstrap -->
     <link href="http://cdn.staticfile.org/twitter-bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet" media="screen" type="text/css">
     <link href="http://v2.bootcss.com/assets/css/bootstrap-responsive.css" rel="stylesheet" media="screen" type="text/css">
-    <link rel="stylesheet" type="text/css" href="/css/todc-bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo C('BASE_URI');?>/css/todc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo C('BASE_URI');?>/css/main.css">
 </head>
 <body>
     <div class="navbar navbar-static-top">
@@ -15,11 +15,11 @@
             <div class="container">
                 <ul class="nav">
                     <li class="active">
-                        <a href="/">首页</a>
+                        <a href="<?php echo C('BASE_URI');?>">首页</a>
                     </li>
                     <li class="divider-vertical"></li>
                     <li>
-                        <a href="#">当前城市:<?php echo isset(cookie('region')['name']) ? cookie('region')['name']:'所有';?></a>
+                        <a href="#">当前城市:<?php $temp=cookie('region');echo isset($temp['name']) ? $temp['name']:'所有';?></a>
                     </li>
                 </ul>
                 <ul class="nav pull-right" id="navLogin">

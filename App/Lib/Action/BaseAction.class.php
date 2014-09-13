@@ -12,10 +12,10 @@ class BaseAction extends Action{
 	public $login;
 
 	public function _initialize() {
-		$this->ca = D('category');
+		$this->ca = D('Category');
 		$cate = $this->ca->getCategory();
 		$this->assign('category', $cate);
-		$this->regions = D('region');
+		$this->regions = D('Region');
 		$regions = $this->regions->getRegion();
 		$this->assign('regions', $regions);
 		$this->login = D('User')->getLoginInfo();

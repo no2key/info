@@ -39,8 +39,8 @@ class PublishModel extends Model {
 	}
 
 	public function formatOutput(&$list, $picSize='m') {
-		$ca = D('category');
-		$re = D('region');
+		$ca = D('Category');
+		$re = D('Region');
 		foreach ($list as &$l) {
 			$l['category'] = $ca->getCateName($l['category']);
 			$l['region'] = $re->regions[$l['region']];

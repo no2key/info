@@ -45,7 +45,7 @@ class UserAction extends BaseAction {
 	}
 
 	public function mailDetail() {
-		$mail = D('mail');
+		$mail = D('Mail');
 		$map = array();
 		$map[] = $this->_param('from');
 		$data = array();
@@ -65,7 +65,7 @@ class UserAction extends BaseAction {
 	}
 
 	public function mail() {
-		$mail = D('mail');
+		$mail = D('Mail');
 
 		$recv = $mail->where(array('to'=>$this->login['id']))->Distinct(true)->field(array('from','date'))->order('date desc')->select();
 		$send = $mail->where(array('from'=>$this->login['id']))->Distinct(true)->field(array('to', 'date'))->order('date desc')->select();

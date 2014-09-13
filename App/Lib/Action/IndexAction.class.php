@@ -65,7 +65,7 @@ class IndexAction extends BaseAction {
 		$list = $User->where($data)->count();
 		if ($list) {
 			cookie('token', aes_encode($_POST['username']), array('expire'=>time()+3600*24));
-			$this->success('登录成功！', '', false, array('token'=>aes_encode($_POST['username'])));
+			$this->success('登录成功！', C('BASE_URI'), false, array('token'=>aes_encode($_POST['username'])));
 		} else {
 			$this->error('登录失败！');
 		}
@@ -74,7 +74,7 @@ class IndexAction extends BaseAction {
 	public function logout() {
 		session(null);
 		cookie('token', null, array('expire'=>-1));
-		$this->redirect('Index/index');
+		$this->redirect(C('BASE_URI'));
 	}
 
 	public function reg() {

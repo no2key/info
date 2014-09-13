@@ -13,7 +13,8 @@ class UserModel extends Model {
 		$User = M('User');
 		$usr = aes_decode(cookie('token'));
 		if ($User->where("username='$usr'")->count()) {
-			$vo = $User->where("username='$usr'")->select()[0];
+			$vo = $User->where("username='$usr'")->select();
+			$vo = $vo[0];
 		}
 		return $vo;
 	}
