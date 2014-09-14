@@ -13,6 +13,12 @@
     <div class="navbar navbar-static-top">
         <div class="navbar-inner">
             <div class="container">
+                <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div class="nav-collapse collapse" style="height: 0;">
                 <ul class="nav">
                     <li class="active">
                         <a href="{:C('BASE_URI')}">{:LT('shouye')}</a>
@@ -33,8 +39,10 @@
                     </li>
                     <?php endif;?>
                     <li class="divider-vertical"></li>
-                </ul>
 
+
+                </ul>
+                </div>
                 <!-- reg -->
                 <div id="myReg" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-header">
@@ -137,23 +145,16 @@ $(function(){
         "class":"divider-vertical"
     }).appendTo("#navLogin");
     $("<li>",{
-        "html":"<div class=\"pull-right btn-group\">"
-        +"<button class=\"btn\" onclick=\"window.location.href='{:U('Index/sign')}';\">{:LT('qiandao')}</button>"
-        +"<button class=\"btn dropdown-toggle\" data-toggle=\"dropdown\">"
-        +"<span class=\"caret\"></span>"
-        +"</button>"
-        +"<ul class=\"dropdown-menu\">"
-        +"<li>"
-        +"<a href=\"{:U('Publish/index')}\">{:LT('mianfeifabuxinxi')}</a>"
-        +"</li>"
-        +"<li>"
-        +"<a href=\"{:U('User/index')}\">{:LT('gerenzhongxin')}</a>"
-        +"</li>"
-        +"<li>"
-        +"<a href=\"{:U('Index/logout')}\">{:LT('tuichudenglu')}</a>"
-        +"</li>"
-        +"</ul>"
-        +"</div>"
+        "class":"dropdown dropdown-hover",
+        "html":
+            "<button class=\"btn\" style='display: inline-block' href=\"{:U('Index/sign')}\">"+"{:LT('qiandao')}</button>"+
+            "<button class=\"btn dropdown-toggle\" style='display: inline-block' data-toggle=\"dropdown\">"+
+            "<b class=\"caret\"></b></button>"+
+            "<ul class=\"dropdown-menu fadeIn animated-fast\" role=\"menu\" aria-labelledby=\"dLabel\">"+
+            "<li><a href=\"{:U('Publish/index')}\">{:LT('mianfeifabuxinxi')}</a></li>"+
+            "<li><a href=\"{:U('User/index')}\">{:LT('gerenzhongxin')}</a></li>"+
+            "<li><a href=\"{:U('Index/logout')}\">{:LT('tuichudenglu')}</a></li>"+
+            "</ul>"
     }).appendTo("#navLogin");
 })
 
