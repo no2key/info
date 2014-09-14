@@ -21,6 +21,10 @@
                     <li>
                         <a href="#">{:LT('dangqianchengshi')}:<?php $temp=cookie('region');echo isset($temp['name']) ? $temp['name']:LT('suoyou');?></a>
                     </li>
+                    <li class="divider-vertical"></li>
+                    <li>
+                        <a href="{:C('BASE_URI')}?lang={$change_lang}">{:LT('qiehuanyuyan')}</a>
+                    </li>
                 </ul>
                 <ul class="nav pull-right" id="navLogin">
                     <?php if(!$usr):?>

@@ -12,6 +12,23 @@ class BaseAction extends Action{
 	public $login;
 
 	public function _initialize() {
+		$lang = $this->_param('lang');
+		$cookieLang = cookie('lang');
+		if (isset($lang)) {
+			cookie('lang', $lang, array('expire'=>time()+3600*24));
+		} else if (!isset($cookieLang)) {
+			$lang = 'cn';
+			cookie('lang', $lang, array('expire'=>time()+3600*24));
+		} else {
+			$lang = $cookieLang;
+		}
+		if ($lang == 'cn') {
+			$GLOBALS['lang'] = 'LANG';
+			$this->assign('change_lang', 'en');
+		} else if ($lang = 'en') {
+			$GLOBALS['lang'] = 'LANG-EN';
+			$this->assign('change_lang', 'cn');
+		}
 		$this->ca = D('Category');
 		$cate = $this->ca->getCategory();
 		$this->assign('category', $cate);

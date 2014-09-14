@@ -56,6 +56,7 @@ return array(
 			'gerenzhongxin'=>'个人中心',
 			'tuichudenglu'=>'退出登录',
 			'querenmima'=>'确认密码',
+			'qiehuanyuyan'=>'切换英文',
 			//首页
 			'zhaopin'=>'招聘',
 			'chazhao'=>'查找',
@@ -150,6 +151,7 @@ return array(
 			'gerenzhongxin'=>'user center',
 			'tuichudenglu'=>'logout',
 			'querenmima'=>'confirm password',
+			'qiehuanyuyan'=>'chang language chinese',
 			//首页
 			'zhaopin'=>'jobs',
 			'chazhao'=>'search',

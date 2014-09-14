@@ -805,13 +805,13 @@ function aes_decode($string = '', $skey = 'info') {
 }
 
 function LT($key) {
-	$lang = C('LANG');
+	$lang = C($GLOBALS['lang']);
 //	$lang = C('LANG-EN');
 	return $lang['term'][$key];
 }
 
 function LC() {
-	$lang = C('LANG');
+	$lang = C($GLOBALS['lang']);
 //	$lang = C('LANG-EN');
 	$params = func_get_args();
 	if (empty($params[0])) {
