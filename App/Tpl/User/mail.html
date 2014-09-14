@@ -21,10 +21,10 @@
             <div class="span3">
                 <ul class="nav nav-list bs-docs-sidenav">
                     <li>
-                        <a href="{:U('User/index')}">我的发布</a>
+                        <a href="{:U('User/index')}">{:LT('wodefabu')}</a>
                     </li>
                     <li class="active">
-                        <a href="{:U('User/mail')}">我的私信</a>
+                        <a href="{:U('User/mail')}">{:LT('wodesixin')}</a>
                     </li>
                 </ul>
             </div>
@@ -46,12 +46,12 @@
                     </ul>
                     <div class="tab-content">
                         <?php foreach($data as $key=>$vo):?>
-                        <a href="{:U('User/mailDetail', array('from'=>$key))}" class="btn btn-large btn-block" type="button" style="width: 50%;left: 25%;">更多消息</a>
+                        <a href="{:U('User/mailDetail', array('from'=>$key))}" class="btn btn-large btn-block" type="button" style="width: 50%;left: 25%;">{:LT('gengduoxiaoxi')}</a>
                         <hr>
                         <div class="tab-pane <?php if($j++ == 0):?>active<?php endif;?>" id="{$key}">
                             <?php foreach($vo as $key=>$v):?>
-                            <p><span>用户：{$v.from}</span><span class="pull-right">{$v.date}</span> </p>
-                            <p>说：{$v.content}</p>
+                            <p><span>{:LT('yonghu')}：{$v.from}</span><span class="pull-right">{$v.date}</span> </p>
+                            <p>{:LT('shuo')}：{$v.content}</p>
                             <hr>
                             <?php endforeach;?>
                         </div>
@@ -59,9 +59,9 @@
                     </div>
                     <form action="{:U('User/sendMail')}" method="post">
                         <input id="mail_to" type="hidden" name="to">
-                        <input class="input-block-level" name="content" type="text" id="inputEmail" placeholder="回复">
+                        <input class="input-block-level" name="content" type="text" id="inputEmail" placeholder="{:LT('huifu')}">
                         <br>
-                        <button type="submit" class="btn btn-large btn-block btn-primary">发送</button>
+                        <button type="submit" class="btn btn-large btn-block btn-primary">{:LT('fasong')}</button>
                     </form>
                 </div>
                 <div class="pagination">

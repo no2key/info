@@ -9,40 +9,40 @@
             <form class="form-horizontal" method="post" action="{:U('Publish/update')}" enctype="multipart/form-data">
                 <input type="hidden" name="id" value="{$data.id}">
                 <div class="control-group">
-                    <label class="control-label" for="inputTitle">标题：</label>
+                    <label class="control-label" for="inputTitle">{:LT('biaoti')}：</label>
                     <div class="controls">
                         <input type="text" id="inputTitle" placeholder="" name="title" value="{$data.title}">
                     </div>
                 </div>
                 <?php if(!empty($data['pay'])):?>
                 <div class="control-group">
-                    <label class="control-label" for="inputPay">工资：</label>
+                    <label class="control-label" for="inputPay">{:LT('gongsi')}：</label>
                     <div class="controls">
                         <input type="text" id="inputPay" placeholder="" name="pay" value="{$data.pay}"><span> 元/天</span>
                     </div>
                 </div>
                 <?php endif;?>
                 <div class="control-group">
-                    <label class="control-label" for="inputContent">描述：</label>
+                    <label class="control-label" for="inputContent">{:LT('miaoshu')}：</label>
                     <div class="controls">
                         <textarea id="inputContent" name="content" rows="9" class="input-block-level input-xxlarge">{$data.content}</textarea>
                     </div>
                 </div>
                 <div class="control-group">
-                    <label class="control-label" for="inputContract">联系人：</label>
+                    <label class="control-label" for="inputContract">{:LT('lianxiren')}：</label>
                     <div class="controls">
                         <input type="text" id="inputContract" placeholder="" name="contract" value="{$data.contract}">
                     </div>
                 </div>
                 <div class="control-group">
-                    <label class="control-label" for="inputPhone">联系电话：</label>
+                    <label class="control-label" for="inputPhone">{:LT('lianxidianhua')}：</label>
                     <div class="controls">
                         <input type="text" id="inputPhone" placeholder="" name="phone" value="{$data.phone}">
                     </div>
                 </div>
                 <div class="control-group">
                     <div class="controls">
-                        <button type="submit" class="btn btn-primary">免费注册并发布</button> <button type="button" class="btn">取消</button>
+                        <button type="submit" class="btn btn-primary">{:LT('xiugai')}</button> <button type="button" class="btn">{:LT('quxiao')}</button>
                     </div>
                 </div>
             </form>

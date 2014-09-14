@@ -803,3 +803,26 @@ function aes_decode($string = '', $skey = 'info') {
 	}
 	return base64_decode(join('', $strArr));
 }
+
+function LT($key) {
+	$lang = C('LANG');
+//	$lang = C('LANG-EN');
+	return $lang['term'][$key];
+}
+
+function LC() {
+	$lang = C('LANG');
+//	$lang = C('LANG-EN');
+	$params = func_get_args();
+	if (empty($params[0])) {
+		return '';
+	}
+	$key = $params[0];
+
+	if (count($params) > 1) {
+		array_shift($params);
+		array_unshift($params, $lang['sentence'][$key]);
+		return call_user_func_array('sprintf', $params);
+	}
+	return $lang['sentence'][$key];
+}

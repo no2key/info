@@ -9,7 +9,7 @@ class PublishAction extends BaseAction {
 		$Form   =   D('Publish');
 		if($Form->create()) {
 			if (!$this->login) {
-				$this->error("请先登录");
+				$this->error(LT('qingxiandenglu'));
 			}
 			$Form->uid = $this->login['id'];
 			if (array_sum($_FILES['photo']['size']) > 0) {
@@ -23,9 +23,9 @@ class PublishAction extends BaseAction {
 			}
 			$result =   $Form->add();
 			if($result) {
-				$this->success('操作成功！', C('BASE_URI'));
+				$this->success(LT('caozuo').LT('chenggong'), C('BASE_URI'));
 			}else{
-				$this->error('写入错误！');
+				$this->error(LT('xieru').LT('cuowu'));
 			}
 		}else{
 			$this->error($Form->getError());
@@ -35,12 +35,12 @@ class PublishAction extends BaseAction {
 	public function edit($id=0){
 		$Form   =   M('Publish');
 		if(!$this->login){
-			$this->error('用户未登录');
+			$this->error(LC('user_not_login_tips'));
 		}
 
 		$data   =   $Form->find($id);
 		if (empty($data)) {
-			$this->error('编辑的信息不存在');
+			$this->error(LC('edit_not_exists'));
 		}
 		$this->assign('data', $data);
 		$this->display();
@@ -51,9 +51,9 @@ class PublishAction extends BaseAction {
 		if($Form->create()) {
 			$result =   $Form->save();
 			if($result) {
-				$this->success('操作成功！', C('BASE_URI'));
+				$this->success(LT('caozuo').LT('chenggong'), C('BASE_URI'));
 			}else{
-				$this->error('写入错误！');
+				$this->error(LT('xieru').LT('cuowu'));
 			}
 		} else {
 			$this->error($Form->getError());
@@ -63,7 +63,7 @@ class PublishAction extends BaseAction {
 	public function del() {
 		$Form   =   M('Publish');
 		if(!$this->login){
-			$this->error('用户未登录');
+			$this->error(LC('user_not_login_tips'));
 		}
 		$map['uid'] = $this->login['id'];
 		$map['id'] = $this->_param('id');
@@ -72,9 +72,9 @@ class PublishAction extends BaseAction {
 			$Form->status = 1;
 			$Form->where($map)->save();
 		} else {
-			$this->error('权限不足');
+			$this->error(LC('no_permission'));
 		}
-		$this->success('删除成功');
+		$this->success(LT('shanchu').LT('chenggong'));
 	}
 
 	public function file() {

@@ -8,7 +8,6 @@ class DetailAction extends BaseAction{
 		))->select();
 		$Data->formatOutput($list);
 		$Data->addView($list[0]['id']);
-
 		$this->assign('data', $list[0]);
 
 		$this->display();

@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- Bootstrap -->
     <link href="http://cdn.staticfile.org/twitter-bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet" media="screen" type="text/css">
     <link href="http://v2.bootcss.com/assets/css/bootstrap-responsive.css" rel="stylesheet" media="screen" type="text/css">
-    <link rel="stylesheet" type="text/css" href="{:C('BASE_URI')}/css/todc-bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="{:C('BASE_URI')}/css/main.css">
+    <link rel="stylesheet" type="text/css" href="{:C('BASE_URI')}css/todc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="{:C('BASE_URI')}css/main.css">
 </head>
 <body>
     <div class="navbar navbar-static-top">
@@ -15,17 +15,17 @@
             <div class="container">
                 <ul class="nav">
                     <li class="active">
-                        <a href="{:C('BASE_URI')}">首页</a>
+                        <a href="{:C('BASE_URI')}">{:LT('shouye')}</a>
                     </li>
                     <li class="divider-vertical"></li>
                     <li>
-                        <a href="#">当前城市:<?php $temp=cookie('region');echo isset($temp['name']) ? $temp['name']:'所有';?></a>
+                        <a href="#">{:LT('dangqianchengshi')}:<?php $temp=cookie('region');echo isset($temp['name']) ? $temp['name']:LT('suoyou');?></a>
                     </li>
                 </ul>
                 <ul class="nav pull-right" id="navLogin">
                     <?php if(!$usr):?>
                     <li>
-                        <a href="#myReg" data-toggle="modal">注册</a>
+                        <a href="#myReg" data-toggle="modal">{:LT('zhuce')}</a>
                     </li>
                     <?php endif;?>
                     <li class="divider-vertical"></li>
@@ -35,70 +35,70 @@
                 <div id="myReg" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h3 id="myModalLabel">注册</h3>
+                        <h3 id="myModalLabel">{:LT('zhuce')}</h3>
                     </div>
                     <div class="modal-body">
                         <form class="form-horizontal" method="post" action="{:U('Index/reg')}">
                             <div class="control-group">
-                                <label class="control-label" for="inputEmail">用户名：</label>
+                                <label class="control-label" for="inputEmail">{:LT('yonghuming')}：</label>
                                 <div class="controls">
-                                    <input type="text" id="inputEmail" placeholder="手机号/用户名" name="username">
+                                    <input type="text" id="inputEmail" placeholder="{:LT('shoujihao')}/{:LT('yonghuming')}" name="username">
                                 </div>
                             </div>
                             <div class="control-group">
-                                <label class="control-label" for="inputPassword">密码：</label>
+                                <label class="control-label" for="inputPassword">{:LT('mima')}：</label>
                                 <div class="controls">
-                                    <input type="password" id="inputPassword" placeholder="请输入密码" name="password">
+                                    <input type="password" id="inputPassword" placeholder="{:LT('qingshuru')}{:LT('mima')}" name="password">
                                 </div>
                             </div><div class="control-group">
-                            <label class="control-label" for="inputPassword">确认密码：</label>
+                            <label class="control-label" for="inputPassword">{:LT('querenmima')}：</label>
                             <div class="controls">
-                                <input type="password" id="inputPassword" placeholder="请输入密码" name="repassword">
+                                <input type="password" id="inputPassword" placeholder="{:LT('querenmima')}" name="repassword">
                             </div>
                         </div>
                         <div class="control-group">
                             <div class="controls">
-                                <button type="submit" class="btn">注册</button>
+                                <button type="submit" class="btn">{:LT('zhuce')}</button>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">{:LT('guanbi')}</button>
                 </div>
             </div>
                 <!-- login -->
                 <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h3 id="myModalLabel">登录</h3>
+                    <h3 id="myModalLabel">{:LT('denglu')}</h3>
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal" method="post" action="{:U('Index/login')}">
                         <div class="control-group">
-                            <label class="control-label" for="inputEmail">帐号：</label>
+                            <label class="control-label" for="inputEmail">{:LT('zhanghao')}：</label>
                             <div class="controls">
-                                <input type="text" id="inputEmail" placeholder="手机号/用户名" name="username">
+                                <input type="text" id="inputEmail" placeholder="{:LT('shoujihao')}/{:LT('yonghuming')}" name="username">
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label" for="inputPassword">密码：</label>
+                            <label class="control-label" for="inputPassword">{:LT('mima')}：</label>
                             <div class="controls">
-                                <input type="password" id="inputPassword" placeholder="请输入密码" name="password">
+                                <input type="password" id="inputPassword" placeholder="{:LT('qingshuru')}{:LT('mima')}" name="password">
                             </div>
                         </div>
                         <div class="control-group">
                             <div class="controls">
                                 <label class="checkbox">
-                                    <input type="checkbox">记住我
+                                    <input type="checkbox">{:LT('jizhuwo')}
                                 </label>
-                                <button type="submit" class="btn">登录</button>
+                                <button type="submit" class="btn">{:LT('denglu')}</button>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">{:LT('guanbi')}</button>
                 </div>
             </div>
             </div>
@@ -115,7 +115,7 @@ $(function(){
     var name="{$usr}";
     if(!name){
         $("<li>",{
-            "html":"<a href='#myModal' data-toggle='modal'>登录</a>"
+            "html":"<a href='#myModal' data-toggle='modal'>{:LT('denglu')}</a>"
         }).appendTo("#navLogin");
         return 
     }
@@ -127,26 +127,26 @@ $(function(){
     }).appendTo("#navLogin");
 
     $("<li>",{
-        "html":"<a href='javascript:'>{$jifen}<small> 积分</small></a>"
+        "html":"<a href='javascript:'>{$jifen}<small> {:LT('jifen')}</small></a>"
     }).appendTo("#navLogin");
     $("<li>",{
         "class":"divider-vertical"
     }).appendTo("#navLogin");
     $("<li>",{
         "html":"<div class=\"pull-right btn-group\">"
-        +"<button class=\"btn\" onclick=\"window.location.href='{:U('Index/sign')}';\">签到</button>"
+        +"<button class=\"btn\" onclick=\"window.location.href='{:U('Index/sign')}';\">{:LT('qiandao')}</button>"
         +"<button class=\"btn dropdown-toggle\" data-toggle=\"dropdown\">"
         +"<span class=\"caret\"></span>"
         +"</button>"
         +"<ul class=\"dropdown-menu\">"
         +"<li>"
-        +"<a href=\"{:U('Publish/index')}\">免费发布信息</a>"
+        +"<a href=\"{:U('Publish/index')}\">{:LT('mianfeifabuxinxi')}</a>"
         +"</li>"
         +"<li>"
-        +"<a href=\"{:U('User/index')}\">个人中心</a>"
+        +"<a href=\"{:U('User/index')}\">{:LT('gerenzhongxin')}</a>"
         +"</li>"
         +"<li>"
-        +"<a href=\"{:U('Index/logout')}\">退出登录</a>"
+        +"<a href=\"{:U('Index/logout')}\">{:LT('tuichudenglu')}</a>"
         +"</li>"
         +"</ul>"
         +"</div>"

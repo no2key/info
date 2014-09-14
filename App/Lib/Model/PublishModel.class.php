@@ -11,12 +11,12 @@ class PublishModel extends Model {
 		$usr=aes_decode(cookie('token'));
 		$jifen = $User->where("username='$usr'")->getField('jifen');
 		if ($jifen < C('JIFEN_POST_DEC')) {
-			$this->error = '积分不足,至少需要'.C('JIFEN_POST_DEC').'分';
+			$this->error = LC('no_enough_pub_score', C('JIFEN_POST_DEC'));
 			return false;
 		}
 		if (isset($data['photo']) &&
 			$jifen < (C('JIFEN_POST_PIC_DEC') + C('JIFEN_POST_DEC'))) {
-			$this->error = '积分不足,发送有图信息至少需要'.(C('JIFEN_POST_PIC_DEC') + C('JIFEN_POST_DEC')).'分';
+			$this->error = LC('no_enough_pub_pic_score', (C('JIFEN_POST_PIC_DEC') + C('JIFEN_POST_DEC')));
 			return false;
 		}
 		return true;
@@ -55,6 +55,8 @@ class PublishModel extends Model {
 				}
 				$l['thumb'] = $l['photo'][0];
 			}
+			$User = M('User');
+			$l['uname'] = $User->where('id='.$l['uid'])->getField('username');
 			$m = M('kv');
 			$l['view'] = intval($m->where(array('key'=>"publish:".$l['id']))->getField('value'));
 		}

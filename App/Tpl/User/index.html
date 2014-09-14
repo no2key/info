@@ -21,10 +21,10 @@
             <div class="span3">
                 <ul class="nav nav-list bs-docs-sidenav">
                     <li class="active">
-                        <a href="#">我的发布</a>
+                        <a href="#">{:LT('wodefabu')}</a>
                     </li>
                     <li>
-                        <a href="{:U('User/mail')}">我的私信</a>
+                        <a href="{:U('User/mail')}">{:LT('wodesixin')}</a>
                     </li>
                 </ul>
             </div>
@@ -32,10 +32,10 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>标题</th>
-                            <th>时间</th>
-                            <th>类别</th>
-                            <th>操作</th>
+                            <th>{:LT('biaoti')}</th>
+                            <th>{:LT('shijian')}</th>
+                            <th>{:LT('leibie')}</th>
+                            <th>{:LT('caozuo')}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -46,13 +46,13 @@
                         <td>{$vo.category}</td>
                         <td>
                             <span class="span4">
-                            <a href="<?php echo U('User/refresh', array('id'=>$vo['id']));?>" class="btn btn-success" type="button" style="color: white">刷新</a>
+                            <a href="<?php echo U('User/refresh', array('id'=>$vo['id']));?>" class="btn btn-success" type="button" style="color: white">{:LT('shuaxin')}</a>
                             </span>
                             <span class="span4">
-                            <a href="<?php echo U('Publish/edit', array('id'=>$vo['id']));?>" class="btn btn-primary" type="button" style="color: white">修改</a>
+                            <a href="<?php echo U('Publish/edit', array('id'=>$vo['id']));?>" class="btn btn-primary" type="button" style="color: white">{:LT('xiugai')}</a>
                             </span>
                             <span class="span4">
-                            <a href="<?php echo U('Publish/del', array('id'=>$vo['id']));?>" class="btn btn-danger" type="button" style="color: white">删除</a>
+                            <a href="<?php echo U('Publish/del', array('id'=>$vo['id']));?>" class="btn btn-danger" type="button" style="color: white">{:LT('shanchu')}</a>
                             </span>
                         </td>
                     </tr>

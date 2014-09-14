@@ -65,9 +65,9 @@ class IndexAction extends BaseAction {
 		$list = $User->where($data)->count();
 		if ($list) {
 			cookie('token', aes_encode($_POST['username']), array('expire'=>time()+3600*24));
-			$this->success('登录成功！', C('BASE_URI'), false, array('token'=>aes_encode($_POST['username'])));
+			$this->success(LT('denglu').LT('chenggong'), C('BASE_URI'), false, array('token'=>aes_encode($_POST['username'])));
 		} else {
-			$this->error('登录失败！');
+			$this->error(LT('denglu').LT('shibai'));
 		}
 	}
 
@@ -82,9 +82,9 @@ class IndexAction extends BaseAction {
 		if ($Form->create()) {
 			$result = $Form->add();
 			if ($result) {
-				$this->success('注册成功！');
+				$this->success(LT('zhuce').LT('chenggong'));
 			} else {
-				$this->error('注册失败！');
+				$this->error(LT('zhuce').LT('shibai'));
 			}
 		} else {
 			$this->error($Form->getError());
@@ -101,7 +101,7 @@ class IndexAction extends BaseAction {
 		$sign = $User->where("username='$usr'")->getField('signtime');
 		if ($sign == date('Y-m-d', time())) {
 			if (IS_AJAX) {
-				$this->error("今天已经签到");
+				$this->error(LS('had_signed_tips'));
 				exit;
 			}
 			$this->redirect('Index/index');
@@ -110,7 +110,7 @@ class IndexAction extends BaseAction {
 		$User->where("username='$usr'")->setField('signtime', date('Y-m-d', time()));
 		$User->where("username='$usr'")->setInc('jifen', C('JIFEN_SIGN_INC'));
 		if (IS_AJAX) {
-			$this->success("签到成功");
+			$this->success(LT('qiandao').LT('chenggong'));
 		} else {
 			$this->redirect('Index/index');
 		}
@@ -132,7 +132,7 @@ class IndexAction extends BaseAction {
 		$data = $User->where("username='$usr'")->select();
 		$data = $data[0];
 		if (empty($data['username'])) {
-			$this->error('请先登录');
+			$this->error(LT('qingxiandenglu'));
 		}
 		$this->success('', '', false, array(
 			'id'=>$data['id'],

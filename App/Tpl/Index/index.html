@@ -11,14 +11,14 @@
             <div class="span3">
                 <div>
                     <form class="form-search">
-                        <input type="text" class="input-medium" name="title" style="border-radius: 15px;" placeholder="招聘">
-                        <button type="submit" class="btn">查找</button>
+                        <input type="text" class="input-medium" name="title" style="border-radius: 15px;" placeholder="{:LT('zhaopin')}">
+                        <button type="submit" class="btn">{:LT('chazhao')}</button>
                     </form>
                 </div>
                 <div>
                     <dl class="sidebar-filter">
                         <dt>
-                            筛选
+                            {:LT('shaixuan')}
                         </dt>
                         <?php foreach ($category as $id=>$vo):?>
                             <dd>
@@ -36,13 +36,13 @@
             </div>
             <div class="span9">
                 <ul class="inline new-info">
-                    <a rel="" href="{:U('Index/index?region=0')}">全部城市</a>
+                    <a rel="" href="{:U('Index/index?region=0')}">{:LT('quanbuchengshi')}</a>
                     <?php foreach($regions as $id=>$r): ?>
                     <li><a rel="" href="<?php echo U('Index/index?region='. $id);?>">{$r}</a></li>
                     <?php endforeach;?>
                 </ul>
             <h5 class="new-info">
-                赞助商链接
+                {:LT('zanzhushanglianjie')}
             </h5>
             <div>
                 <ul class="inline">
@@ -54,7 +54,7 @@
 
             </div>
             <h5 class="new-info">
-                最新信息
+                {:LT('zuixinxinxi')}
             </h5>
             <div>
                 <ul class="unstyled">

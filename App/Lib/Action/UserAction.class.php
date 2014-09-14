@@ -25,7 +25,7 @@ class UserAction extends BaseAction {
 				$this->assign('total', $Page->totalPages);
 			}
 		} else {
-			$this->error("请先登录");
+			$this->error(LC('user_not_login_tips'));
 		}
 		$this->display();
 	}
@@ -35,7 +35,7 @@ class UserAction extends BaseAction {
 		if ($mail->create()) {
 			$mail->from = $this->login['id'];
 			if ($mail->add()) {
-				$this->success('发送成功', U('User/mail'));
+				$this->success(LT('fasong').LT('chenggong'), U('User/mail'));
 			} else {
 				$this->error($mail->getError());
 			}
@@ -111,7 +111,7 @@ class UserAction extends BaseAction {
 
 	public function userinfo() {
 		if (!$this->login) {
-			$this->error('请先登录');
+			$this->error(LC('user_not_login_tips'));
 		}
 		$this->success('', '', false, array(
 			'id'=>$this->login['id'],
@@ -124,10 +124,10 @@ class UserAction extends BaseAction {
 
 	public function refresh() {
 		if (!$this->login) {
-			$this->error('请先登录');
+			$this->error(LC('user_not_login_tips'));
 		}
 		if ($this->login['jifen'] < C('JIFEN_REFRESH_DEC')) {
-			$this->error("积分不足，刷新最少".C('JIFEN_REFRESH_DEC')."分");
+			$this->error(LC('no_enough_refresh_score', C('JIFEN_REFRESH_DEC')));
 		}
 		$Form   =   D('Publish');
 		$Form->id = $this->_param('id');
@@ -135,9 +135,9 @@ class UserAction extends BaseAction {
 		if ($Form->save()) {
 			$User = M('User');
 			$User->where("username='".$this->login['username']."'")->setDec('jifen', C('JIFEN_REFRESH_DEC'));
-			$this->success('操作成功！');
+			$this->success(LT('caozuo').LT('chengong'));
 		} else {
-			$this->error('写入错误！');
+			$this->error(LT('xieru').LT('shibai'));
 		}
 	}
 
