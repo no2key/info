@@ -11,6 +11,7 @@ class PublishAction extends BaseAction {
 			if (!$this->login) {
 				$this->error(LT('qingxiandenglu'));
 			}
+			$Form->ip = $_SERVER['REMOTE_ADDR'];
 			$Form->uid = $this->login['id'];
 			if (array_sum($_FILES['photo']['size']) > 0) {
 				$uploadList = $this->_upload();
@@ -49,6 +50,7 @@ class PublishAction extends BaseAction {
 	public function update(){
 		$Form   =   D('Publish');
 		if($Form->create()) {
+			$Form->ip = $_SERVER['REMOTE_ADDR'];
 			$result =   $Form->save();
 			if($result) {
 				$this->success(LT('caozuo').LT('chenggong'), C('BASE_URI'));

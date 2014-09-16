@@ -59,6 +59,9 @@ class PublishModel extends Model {
 			$l['uname'] = $User->where('id='.$l['uid'])->getField('username');
 			$m = M('kv');
 			$l['view'] = intval($m->where(array('key'=>"publish:".$l['id']))->getField('value'));
+			if (isset($l['ip'])) {
+				$l['ip_addr'] = convertip_full($l['ip'], C('IP_DATA_DIR'));
+			}
 		}
 	}
 

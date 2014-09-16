@@ -15,6 +15,7 @@ return array(
 	'DB_PREFIX' => 'info_',
 	'DB_CHARSET' => 'utf8',
 	'BASE_URI'	=> '/',
+	'IP_DATA_DIR'=> __DIR__.'/wry.dat',
 	//积分相关规则
 	'JIFEN_POST_DEC' => 10,
 	'JIFEN_POST_PIC_DEC' => 10,
@@ -76,6 +77,7 @@ return array(
 			'quyu'=>'区域',
 			'riqi'=>'日期',
 			'liulan'=>'浏览',
+			'dizhijiguishudi'=>'地址及归属地',
 			//发布页
 			'biaoti'=>'标题',
 			'fenlei'=>'分类',
@@ -171,6 +173,7 @@ return array(
 			'quyu'=>'region',
 			'riqi'=>'date',
 			'liulan'=>'views',
+			'dizhijiguishudi'=>' and ip located address',
 			//发布页
 			'biaoti'=>'title',
 			'fenlei'=>'category',

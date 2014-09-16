@@ -83,6 +83,12 @@
                 <td style="font-weight: bold">{:LT('lianxiren')}</td>
                 <td>{$data.contract}</td>
             </tr>
+            <?php if(isset($data['ip_addr'])):?>
+            <tr>
+                <td style="font-weight: bold">ip{:LT('dizhijiguishudi')}</td>
+                <td id="">{$data.ip} {$data.ip_addr}</td>
+            </tr>
+            <?php endif;?>
             <tr>
                 <td colspan="2" style="text-align: center;">
                     <a href="#mailModal" role="button" class="btn" data-toggle="modal" style="color: black;">{:LC('send_mail_detail_tip', $data['uname'])}</a>
@@ -90,6 +96,16 @@
             </tr>
             </tbody>
         </table>
+
+
+        <div id="bm_comments"></div>
+        <script type="text/javascript">
+            (function(){
+                var script = document.createElement('script'); script.type = "text/javascript";
+                script.src = "http://baye.me/script?key=aaeb6be83d7e11e48cd5123143074826";
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(script);
+            })();
+        </script>
 
         <!-- Modal -->
         <form action="{:U('User/sendMail')}" method="post">
