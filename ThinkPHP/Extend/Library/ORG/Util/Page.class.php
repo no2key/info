@@ -19,7 +19,7 @@ class Page {
     // 分页URL地址
     public $url     =   '';
     // 默认列表每页显示行数
-    public $listRows = 2;
+    public $listRows = 10;
     // 起始行数
     public $firstRow    ;
     // 分页总页面数
