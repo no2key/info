@@ -11,7 +11,7 @@ class ThirdAction extends Action {
 		$app_id = "101155787";
 		$app_secret = "eb474bcb4a526cdf02ed0a9aa7a055e9";
 		$my_url = "http://datougou.cn/info/index.php?m=third&a=qq";
-		$code = $this->_params('code');
+		$code = $_GET['code'];
 		if(empty($code)) {
 			$_SESSION['state'] = md5(uniqid(rand(), TRUE));
 			//拼接URL
@@ -41,8 +41,7 @@ class ThirdAction extends Action {
 			//Step3：使用Access Token来获取用户的OpenID
 			$params = array();
 			parse_str($response, $params);
-			$graph_url = "https://graph.qq.com/oauth2.0/me?access_token="
-			$params['access_token'];
+			$graph_url = "https://graph.qq.com/oauth2.0/me?access_token=".$params['access_token'];
 			$str  = file_get_contents($graph_url);
 			if (strpos($str, "callback") !== false) {
 				$lpos = strpos($str, "(");
@@ -54,6 +53,20 @@ class ThirdAction extends Action {
 				echo "<h3>error:</h3>" . $user->error;
 				echo "<h3>msg  :</h3>" . $user->error_description;
 				exit;
+			}
+			$User = D('User');
+			$data = array('password' => $user->openid);
+			$list = $User->where($data)->select();
+			if (isset($list[0])) {
+				cookie('token', aes_encode($list[0]['username']), array('expire'=>time()+3600*24));
+				$this->success(LT('denglu').LT('chenggong'), C('BASE_URI'), false, array('token'=>aes_encode($list[0]['username'])));
+			} else {
+				$User->password = $user->openid;
+				$User->username = "qq_".uniqid();
+				$User->add();
+
+				cookie('token', aes_encode($User->username), array('expire'=>time()+3600*24));
+				$this->success(LT('denglu').LT('chenggong'), C('BASE_URI'), false, array('token'=>aes_encode($User->username)));
 			}
 			echo("Hello " . $user->openid);
 		} else {
