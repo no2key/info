@@ -70,9 +70,22 @@
             <tr>
                 <td style="border-top: none;" colspan="2">
                     {$data.content}</br>
-                    <?php foreach($data['photo'] as $pho):?>
-                    <img src="<?php echo $pho;?>"></a>
-                    <?php endforeach;?>
+
+                    <?php if($data['photo']):?>
+                    <div id="myCarousel" class="offset2 span7 carousel slide">
+                        <!-- Carousel items -->
+                        <div class="carousel-inner">
+                            <?php foreach($data['photo'] as $i=>$pho):?>
+                            <div class="<?php if ($i==0):?>active <?php endif;?>item" style="text-align:-webkit-center">
+                                <img src="{$pho}">
+                            </div>
+                            <?php endforeach;?>
+                        </div>
+                        <!-- Carousel nav -->
+                        <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+                        <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+                    </div>
+                    <?php endif;?>
                 </td>
             </tr>
             <tr>
@@ -127,4 +140,14 @@
             </div>
         </form>
     </div>
+</block>
+
+<block name="userjs">
+    <script>
+        $(function (){
+            $('.carousel').carousel({
+                interval: 3000
+            })
+        })
+    </script>
 </block>

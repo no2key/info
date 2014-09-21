@@ -45,13 +45,16 @@
                         <td>{$vo.date}</td>
                         <td>{$vo.category}</td>
                         <td>
-                            <span class="span4">
+                            <span class="span3">
+                            <a href="<?php echo U('User/zding', array('id'=>$vo['id']));?>" class="btn btn-success" type="button" style="color: white">{:LT('zhiding')}</a>
+                            </span>
+                            <span class="span3">
                             <a href="<?php echo U('User/refresh', array('id'=>$vo['id']));?>" class="btn btn-success" type="button" style="color: white">{:LT('shuaxin')}</a>
                             </span>
-                            <span class="span4">
+                            <span class="span3">
                             <a href="<?php echo U('Publish/edit', array('id'=>$vo['id']));?>" class="btn btn-primary" type="button" style="color: white">{:LT('xiugai')}</a>
                             </span>
-                            <span class="span4">
+                            <span class="span3">
                             <a href="<?php echo U('Publish/del', array('id'=>$vo['id']));?>" class="btn btn-danger" type="button" style="color: white">{:LT('shanchu')}</a>
                             </span>
                         </td>

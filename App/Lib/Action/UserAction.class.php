@@ -141,6 +141,65 @@ class UserAction extends BaseAction {
 		}
 	}
 
+	public function zding() {
+		if (!$this->login) {
+			$this->error(LC('user_not_login_tips'));
+		}
+		if (empty($_POST)) {
+			$id = $this->_param('id');
+			$this->assign('id', $id);
+			$this->display();
+		} else {
+			$Pub = M('Publish');
+			$zding = M('Zding');
+			$type = $this->_param('type');
+			$id = $this->_param('id');
+			$PubDetail = $Pub->where(array('id'=>$id))->find();
+			$days = intval($this->_param('days'));
+			if ($days == 0) {
+				$this->error(LC('zding_days_error_tips'));
+			}
+			if ($type == 0) {
+				//小类
+				$target = intval($PubDetail['category']);
+				$needJifen = $days * C('JIFEN_ZDING_XIAO');
+			} else if ($type == 1) {
+				//大类
+				$pid = $this->ca->getParent($PubDetail['category']);
+				$target = intval($pid);
+				$needJifen = $days * C('JIFEN_ZDING_DA');
+			} else if ($type == 2) {
+				$target = -1;
+				$needJifen = $days * C('JIFEN_ZDING_ALL');
+			}
+
+			//检查积分
+			if ($this->login['jifen'] < $needJifen) {
+				$this->error(LC('no_enouth_zding_score', $needJifen));
+			}
+			//置顶
+			if ($zding->where(array("id"=>$id))->find()) {
+				$zding->zding_begin = date('Y-m-d H:i:s', time());
+				$zding->zding_end = date('Y-m-d H:i:s', time() + $days * 3600 * 24);
+				$zding->target = $target;
+				$zding->id = $id;
+				$zding->save();
+			} else {
+				$zding->zding_begin = date('Y-m-d H:i:s', time());
+				$zding->zding_end = date('Y-m-d H:i:s', time() + $days * 3600 * 24);
+				$zding->target = $target;
+				$zding->id = $id;
+				$zding->add();
+			}
+			//减积分
+			$User=M('User');
+			$usr=aes_decode(cookie('token'));
+			$User->where("username='$usr'")->setDec('jifen', $needJifen);
+
+			$this->success(LT('zhiding').LT('chenggong'), U("User/index"));
+		}
+	}
+
 }
 
 ?>

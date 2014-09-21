@@ -16,10 +16,14 @@ return array(
 	'DB_CHARSET' => 'utf8',
 	'BASE_URI'	=> '/',
 	'IP_DATA_DIR'=> __DIR__.'/wry.dat',
+	'ZDING_NUM' => 5,
 	//积分相关规则
 	'JIFEN_POST_DEC' => 10,
 	'JIFEN_POST_PIC_DEC' => 10,
 	'JIFEN_REFRESH_DEC' => 5,
+	'JIFEN_ZDING_XIAO'=>20,
+	'JIFEN_ZDING_DA'=>30,
+	'JIFEN_ZDING_ALL'=>50,
 	'JIFEN_SIGN_INC' => 10,
 	'JIFEN_COMMENT_INC' => 1,
 
@@ -33,7 +37,9 @@ return array(
 			'no_permission'=>'权限不足',
 			'no_enough_refresh_score'=> '积分不足，刷新最少 %d 分',
 			'no_enough_pub_score'=>'积分不足，发帖最少 %d 分',
+			'no_enouth_zding_score'=>'积分不足，置顶最少 %d 分',
 			'no_enough_pub_pic_score'=>'积分不足,发送有图信息至少需要 %d 分',
+			'zding_days_error_tips'=>'请输入大于等于1的指定天数',
 		),
 		'term' => array(
 			//头部
@@ -65,6 +71,7 @@ return array(
 			'quanbuchengshi'=>'全部城市',
 			'zanzhushanglianjie'=>'赞助商链接',
 			'zuixinxinxi'=>'最新信息',
+			'zhidingtie'=>'置顶帖',
 			//详情页
 			'fasong'=>'发送',
 			'zhanneixin'=>'站内信',
@@ -105,6 +112,14 @@ return array(
 			'caozuo'=>'操作',
 			'shuaxin'=>'刷新',
 			'shanchu'=>'删除',
+			'zhidingleixing'=>'置顶类型',
+			'xiaolei'=>'小类',
+			'dalei'=>'大类',
+			'quanzhan'=>'全站',
+			'zhidingshijian'=>'置顶时间',
+			'tianshu'=>'天数',
+			'zhiding'=>'置顶',
+
 			//私信
 			'gengduoxiaoxi'=>'更多消息',
 			'yonghu'=>'用户',

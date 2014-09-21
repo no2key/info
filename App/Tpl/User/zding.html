@@ -1,0 +1,43 @@
+<extend name="Public:base" />
+<block name="title"><title>index</title></block>
+<block name="container">
+
+    <div class="container">
+        <div class="span12">
+            <h1>LOGO</h1>
+        </div>
+
+        <div class="row-fluid">
+            <div class="span3">
+                <ul class="nav nav-list bs-docs-sidenav">
+                    <li class="active">
+                        <a href="{:U('User/index')}">{:LT('wodefabu')}</a>
+                    </li>
+                    <li>
+                        <a href="{:U('User/mail')}">{:LT('wodesixin')}</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="span9">
+                <form action="{:U('User/zding')}" method="post">
+                    <input type="hidden" name="id" value="{$id}">
+                    <label>{:LT('zhidingleixing')}</label>
+                    <select class="input-block-level" name="type">
+                        <option value="0">{:LT('xiaolei')}</option>
+                        <option value="1">{:LT('dalei')}</option>
+                        <option value="2">{:LT('quanzhan')}</option>
+                    </select>
+                    <label>{:LT('zhidingshijian')}</label>
+                    <input class="input-block-level" name="days" type="text" id="inputDays" placeholder="{:LT('tianshu')}">
+
+                    <button type="submit" class="btn btn-large btn-block btn-primary">{:LT('zhiding')}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</block>
+<block name="userjs">
+    <script>
+
+    </script>
+</block>

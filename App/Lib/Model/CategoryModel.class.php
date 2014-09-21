@@ -20,6 +20,19 @@ class CategoryModel extends Model {
 		return $this->ca;
 	}
 
+	public function getParent($id) {
+		if (!isset($this->ca)) {
+			$this->getCategory();
+		}
+		foreach ($this->ca as $pid=>$p) {
+			foreach ($p['sub'] as $e) {
+				if ($e['id'] == $id) {
+					return $pid;
+				}
+			}
+		}
+	}
+
 	public function getCateName($caId) {
 		foreach ($this->ca as $id=>$parent) {
 			if ($id == $caId) {

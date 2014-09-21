@@ -24,32 +24,53 @@ class IndexAction extends BaseAction {
 		if ($region) {
 			$map['region'] = $region;
 		}
+		//全站置顶KEY
+		$s = array(-1);
 		if ($category) {
+			$s[] = $category;
 			$cates = $this->ca->getCategory();
 			if (!isset($cates[$category])) {
-				$map['category'] = array('in', $category);
+				$pid = $this->ca->getParent($category);
+				$s[] = $pid;
 			} else {
-				$q = array('in');
 				foreach ($cates[$category]['sub'] as $sub) {
-					$q[] = $sub['id'];
+					$s[] = $sub['id'];
 				}
-				$map['category'] = $q;
 			}
+			$map['category'] = array('in', implode(',', $s));
 		}
+		$dingMap['info_zding.target'] = array('in', implode(',', $s));
 		if ($title) {
 			$map['title'] = array('like', "%$title%");
 		}
 		$Data = M('Publish');
+		$Zding = M('Zding');
+		$now = date('Y-m-d H:i:s', time());
+		$dingMap['info_zding.zding_begin'] = array('lt', $now);
+		$dingMap['info_zding.zding_end'] = array('gt', $now);
+		$dingData = $Zding->join('`info_publish` ON `info_publish`.id = `info_zding`.id')->where($dingMap)->select();
+		shuffle($dingData);
+		$dingData = array_slice($dingData, 0, C('ZDING_NUM'));
+		$s = array();
+		foreach ($dingData as $ding) {
+			$s[] = $ding['id'];
+		}
+		$map['id'] = array('not in', implode(',', $s));
 		import('ORG.Util.Page');
 		$count = $Data->where($map)->count();
-		$Page = new Page($count);
+		$Page = new Page($count, 5);
 		$show = $Page->show();
 		// 进行分页数据查询
 		$list = $Data->where($map)->order('date desc')->limit($Page->firstRow . ',' . $Page->listRows)->select();
+		if (!is_array($list)) {
+			$list = array();
+		}
+		foreach ($dingData as $ding) {
+			array_unshift($list, $ding);
+		}
 		$pub = D('Publish');
 		$pub->formatOutput($list, 's');
-
-		$this->assign('data', $list); // 赋值数据集
+		$this->assign('data', $list);
 		if (!IS_AJAX) {
 			$this->assign('page', $show); // 赋值分页输出
 		} else {

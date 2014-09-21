@@ -56,26 +56,29 @@
             <h5 class="new-info">
                 {:LT('zuixinxinxi')}
             </h5>
-            <div>
-                <ul class="unstyled">
-                    <volist name="data" id="vo">
-                        <li class="info-li-style">
-                            <a href="__APP__/Detail/index/id/{$vo.id}" class="media-cap">
-                                    <img src="{$vo.thumb}"></a>
+            <div class="index-list row-fluid">
+                <volist name="data" id="vo">
+                    <div class="row-fluid">
+                        <a href="__APP__/Detail/index/id/{$vo.id}" class="media-cap">
+                                <img src="{$vo.thumb}"></a>
+                        <div>
                             <div>
-                                <div>
-                                    <a href="__APP__/Detail/index/id/{$vo.id}" class="media-body-title">{$vo.title}</a>
-                                    <span class="media-body-time">{$vo.date}</span>
-                                </div>
-                                <div class="media-body-address">{$vo.region} - {$vo.address}</div>
-                                <div class="media-body-category inline pull-left">{$vo.category}</div>
-                                <?php if (!empty($vo['pay'])):?>
-                                <span class="media-body-pay pull-right">{$vo.pay}元/天</span>
-                                <?php endif;?>
+                                <a href="__APP__/Detail/index/id/{$vo.id}" class="media-body-title">
+                                    <?php if($vo['target'] != 0):?>
+                                    【{:LT('zhidingtie')}】
+                                    <?php endif;?>
+                                    {:msubstr($vo['title'],0,22)}
+                                </a>
+                                <span class="media-body-time">{$vo.date}</span>
                             </div>
-                        </li>
-                    </volist>
-                </ul>
+                            <div class="media-body-address">{$vo.region} - {$vo.address}</div>
+                            <div class="media-body-category inline pull-left">{$vo.category}</div>
+                            <?php if (!empty($vo['pay'])):?>
+                            <span class="media-body-pay pull-right">{$vo.pay}元/天</span>
+                            <?php endif;?>
+                        </div>
+                    </div>
+                </volist>
             </div>
             <div class="pagination">
                 {$page}
