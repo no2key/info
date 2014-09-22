@@ -68,7 +68,6 @@ class ThirdAction extends Action {
 				cookie('token', aes_encode($User->username), array('expire'=>time()+3600*24));
 				$this->success(LT('denglu').LT('chenggong'), C('BASE_URI'), false, array('token'=>aes_encode($User->username)));
 			}
-			echo("Hello " . $user->openid);
 		} else {
 			echo("The state does not match. You may be a victim of CSRF.");
 		}
