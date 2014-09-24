@@ -7,4 +7,4 @@ shaozisae
 
 实现信息发布，用户管理与积分功能
 
-测试网址：http://shaozisae.sinaapp.com/
+测试网址：http://datougou.cn/info/
