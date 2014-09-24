@@ -73,6 +73,7 @@ return array(
 			'zanzhushanglianjie'=>'赞助商链接',
 			'zuixinxinxi'=>'最新信息',
 			'zhidingtie'=>'置顶帖',
+			'disanfengdenglu'=>'第三方登录',
 			//详情页
 			'fasong'=>'发送',
 			'zhanneixin'=>'站内信',
@@ -145,7 +146,9 @@ return array(
 			'no_permission'=>'permission deny',
 			'no_enough_refresh_score'=> 'you have not engouth score to refreash,you need %d score',
 			'no_enough_pub_score'=>'you have not engouth score to publish,you need %d score',
-			'no_enough_pub_pic_score'=>'you have not engouth score to publish whith a photo,you need %d score',
+			'no_enough_pub_pic_score'=>'you have not engouth score to publish with a photo,you need %d score',
+			'no_enouth_zding_score'=>'you have not engouth score to publish with recommend,you need %d score',
+			'zding_days_error_tips'=>'please input days greater then 1',
 		),
 		'term' => array(
 			//头部
@@ -177,6 +180,8 @@ return array(
 			'quanbuchengshi'=>'ALL',
 			'zanzhushanglianjie'=>'ads links',
 			'zuixinxinxi'=>'newest info',
+			'zhidingtie'=>'recommend posts',
+			'disanfengdenglu'=>'third part login',
 			//详情页
 			'fasong'=>'send',
 			'zhanneixin'=>'mail in web',
@@ -217,6 +222,9 @@ return array(
 			'caozuo'=>'action',
 			'shuaxin'=>'refresh',
 			'shanchu'=>'remove',
+			'zhidingshijian'=>'recommend days',
+			'tianshu'=>'days',
+			'zhiding'=>'recommend',
 			//私信
 			'gengduoxiaoxi'=>'more mails',
 			'yonghu'=>'user',
